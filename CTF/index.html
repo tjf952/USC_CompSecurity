@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Secret Login</title>
+	<link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+	<link rel="stylesheet" href="signin.css">
+  <link rel="icon" href="_images/icon.png">
+	<style>
+		body, html {
+			font-family: "Special Elite";
+			text-align: center;
+			color: silver;
+		}
+		.bd-placeholder-img {
+			text-anchor: middle;
+			font-size: 1.125rem;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size:3.5rem;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<form id="signin-form" class="form-signin" method="GET">
+			<div class="text-center mb-4">
+				<img class="mb-4" src="_images/shield.png" alt="" width="72" height="72">
+				<h1 class="h3 mb-3 font-weight-normal"> Welcome to S.H.I.E.L.D. </h2>
+			</div>
+			<div class="form-label-group">
+				<input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+				<label for="inputUsername">Username</label>
+			</div>
+			<div class="form-label-group">
+				<input type="password" id="inputPassword" class="form-control" placeholder="Password" required auto>
+				<label for="inputPassword">Password</label>
+			</div>
+			<div class="checkbox mb-3">
+				<label><a href="fetchpassword.html">Forgot Password?</a></label>
+			</div>
+			<button class="btn btn-lg btn-dark btn-block" type="submit">Sign in</button><br>
+			<button class="btn btn-lg btn-light btn-block" type="button" onclick="location.href = 'signup.html';">Sign up</button><br>
+		</form>
+		<p class="mt-5 mb-3 text-muted text-center">Strategic Homeland Intervention
+			<br>Enforcement and Logistics Division<br>USC &copy; 2019</p>
+
+	</div> <!-- .container -->
+
+	<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-firestore.js"></script>
+	<script src="md5.min.js"></script>
+
+	<!-- FIREBASE CODE -->
+	<script>
+     // Initialize Firebase
+     var config = {
+       apiKey: "AIzaSyD23XF6N0N2kKlcNK8ooQf4NkjZAaDlZvg",
+       authDomain: "usc430-17ebc.firebaseapp.com",
+       databaseURL: "https://usc430-17ebc.firebaseio.com",
+       projectId: "usc430-17ebc",
+       storageBucket: "usc430-17ebc.appspot.com",
+       messagingSenderId: "528081126180"
+     };
+
+     firebase.initializeApp(config);
+		 var dbRef = firebase.firestore().collection("users");
+
+		 document.querySelector("#signin-form").onsubmit = function(){
+			 console.log(document.querySelector("#inputUsername").value);
+			 console.log(md5(document.querySelector("#inputPassword").value));
+			 dbRef.get().then(function(querySnapshot) {
+				 var flag = false;
+				    querySnapshot.forEach(function(doc) {
+								if(doc.data().username == document.querySelector("#inputUsername").value) {
+									flag = true;
+									if(md5(document.querySelector("#inputPassword").value) == doc.data().password){
+										console.log("SUCCESS");
+										window.location.href = "success.html";
+									} else {
+										console.log("INCORRECT PASSWORD");
+										window.location.href = "failure.html";
+									}
+								}
+				    });
+						if(!flag) window.location.href = "failure.html";
+				});
+				return false;
+		 };
+
+   </script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+
+CTF Exercises: 20%
+Homeworks: 20%
+Partcipation: 10%
+Midterm: 20%
+Final: 30%
+
+A >= 90
+A- >= 86
+B+ >= 83
+B >= 80
+
+To get to node: ssh node.exp.proj
+	ex: ssh A.test.USC430
+
+FIND: find . -name *flag*
+GREP: grep -irl "flag" *
+ 

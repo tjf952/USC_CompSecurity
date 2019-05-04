@@ -1,0 +1,48 @@
+Name: Thomas Finn
+Email: thomasjf@usc.edu
+User: usc430af
+
+::: TREASURE HUNT :::
+
+Command to find files:
+	find / -iname "*intro*.jpg" -o -iname "*intro*.jpeg" 2>&1 | grep -v "Permission denied"
+
+File 1: /usr/share/pixmaps/xbzf136INTRO-1.jpg
+	Forbidden Planet Poster
+	
+File 2: /dev/136intro-2jjaj.JPEG
+	Godzilla King of the Monsters Poster
+
+File 3: /var/log/136intro-3.jpg
+	It Came From Outer Space Poster
+
+File 4: /etc/wuer136intro-4.JPG
+	The Fly Poster
+
+File 5: /.hidden/asdf136Intro-5kqlw.jpeg
+	2001 A Space Odyssey 
+
+::: INFORMATION HUNT :::
+
+1. What goes in the /var directory on a UNIX computer?
+	A. The /var directory is a standard subdirectory that contains files to which the system writes data during the course of its operations including:
+		/cache, cached data from application programs
+		/games, variable data relating to games in /usr 
+		/lib, dynamic data libraries and files
+		/lock, lock files created by programs
+		/log, log files from the system
+		/run, contains PIDs and sys info
+		/spool, mail, news, and printer queues
+
+2. What is the /dev directory for on a UNIX computer?
+	A. The /dev directory contains special device files that control access to peripheral devices such as floppy adn hard disks.
+
+3. On your experimental node, find out how large the disks are and 
+how much space is free. Put this information in a separate file 
+called top_secret/diskfree.txt.
+
+4. On your experimental node, find out the "vendor id" of the 
+experimental node's CPU model. 
+	A. Found using command 'lscpu'
+		Vendor ID: GenuineIntel 
+

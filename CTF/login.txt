@@ -1,0 +1,2 @@
+To ssh into ctf team:
+  ssh -i ctf2team2.pem ubuntu@13.52.104.32

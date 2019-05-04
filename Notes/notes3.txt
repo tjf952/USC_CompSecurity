@@ -1,0 +1,29 @@
+Buffer Overflow
+  When a buffer is assigned more data than it can hold,
+  the buffer overflows into the next memory space overwriting
+  the data and causing a change in the expected outcome
+
+Input Validation
+  Process of programmatically ensuring that all accepted inputs
+  fits within the logical constraints of the application
+
+Telnet: Cleartext Remote Shell
+  User issues commands over a TCP socket and the server
+  replies with results
+  Ex: telnet yahoo.com 80
+    GET / - gets root directory
+
+Wget
+  Command-line web client useful for scripting interactions
+  Ex: wget http://www.deterlab.net
+
+Netcat (nc)
+  Unix utility for creating and using TCP and UDP sockets
+  Basically a weaker telnet due to lack of protocol
+  Ex: netcat receiver 10000 << attackscript.txt
+
+CRLF (DOS-style) is important for scripting commands such as http
+
+diff -u one.txt two.txt
+diff -u old.c new.c > fixed.patch
+patch old.c -i fixed.patch -o new-patched.c

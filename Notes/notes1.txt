@@ -1,0 +1,37 @@
+
+Commands
+
+sudo (superuser do)
+	sudo shutdown -r now : shutdown system, need user password
+su (switch user)
+	su - : switches to root, need root password
+cat (concatenate)
+	cat /var/log/messages : prints sys messages
+	less /var/log/messages : has buffer and allows search with /,\
+	more /var/log/messages : prints entire listings
+grep (global regular expression print)
+	cat /var/log/messages | grep phrasetofind : prints to ptf
+	cat /var/log/messages | grep ptf | less : pipes ptf to less
+	cat /var/log/messages | grep ptf > file.txt : output to file.txt
+find
+	find . name "*.txt" | head -n 5 : finds txt files, pipes head
+	find directory -name "*.swp" -o -name "*~"
+	find / -mount -mtime 2190 : starts in root directory
+xargs (extended arguments)
+	find / -iname "*.pwd" | xargs strings $1 | sort :
+		runs strings on all pwd files, then sorts
+	find . -mount -mtime +24 \( -name "*~" \) \ head -n 3 | xargs rm $1
+		deletes first 3 ~ files that haven't been modified 24 hours
+locate and updatedb (faster find)
+	updatedb
+	locate *.txt : find all txt files
+	locate *.txt | xargs rm $1 : delete all txt files
+	locate *.txt | head | xargs rm $1 : delete first 10 txt files
+tar (tape archiver)
+	tar cvzf somedir.tar.gz somedir : compresses somedir to tar file
+	tar xvzf somedir.tar.gz : decompresses tar file
+pscp (putty secure copy client)
+	pscp usc430af@users.deterlab.net:/users/usc430af/.. file
+		sends files to local computer from deterlab
+	pscp file usc430af@users.deterlab.net:/users/usc430af/..
+

@@ -1,0 +1,21 @@
+--- webserver.orig.c	2019-03-21 00:23:34.041260149 -0700
++++ webserver.c	2019-03-21 04:07:05.819540794 -0700
+@@ -80,12 +80,16 @@
+ 	strcpy(searchstr, "\r\n");
+ 	strcat(searchstr, headername);
+ 	strcat(searchstr, ": ");
+-
++	// ***ERROR HAPPENS HERE*** //
+ 	if (hdrptr = strstr(req->headers, searchstr)) { 
+ 		hdrptr += strlen(searchstr); 
+ 		if (hdrend = strstr(hdrptr, "\r\n")) { 
+ 			char hdrval[1024]; // temporary return value
+-			memcpy((char *)hdrval, hdrptr, (hdrend - hdrptr));
++			if((hdrend-hdrptr)>1024){
++				memcpy((char *)hdrval, hdrptr, 1024);
++			} else {
++				memcpy((char *)hdrval, hdrptr, (hdrend - hdrptr));
++			}
+ 			hdrval[hdrend - hdrptr] = '\0'; // tack null onto end of header value
+ 			int hdrvallen = strlen(hdrval);
+ 			retval = (char *)malloc((hdrvallen + 1) * sizeof(char)); // malloc a space for retval

@@ -1,0 +1,12 @@
+Command Used: df -h > diskfree.txt
+
+Filesystem                                        Size  Used Avail Use% Mounted on
+udev                                              980M   48K  980M   1% /dev
+tmpfs                                             200M   14M  187M   7% /run
+/dev/sda1                                          15G  2.8G   12G  20% /
+tmpfs                                            1000M     0 1000M   0% /dev/shm
+tmpfs                                             5.0M     0  5.0M   0% /run/lock
+tmpfs                                            1000M     0 1000M   0% /sys/fs/cgroup
+users.isi.deterlab.net:/mnt/projects/proj/USC430  2.8T  879G  1.7T  34% /proj/USC430
+users.isi.deterlab.net:/mnt/other/users/usc430af  1.9T  1.4T  369G  80% /users/usc430af
+tmpfs                                             200M     0  200M   0% /run/user/14169

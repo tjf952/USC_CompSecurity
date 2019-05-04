@@ -1,0 +1,62 @@
+MEMO
+
+1) Describe the security flaw you found, how you fixed it, and how your demo exploit works.
+(The memo itself should quote as little sourcecode as possible; for longer sections,
+refer to filenames and line numbers in the original or your attached patch.)
+
+  Starting with the main function in webserver, a connection to the port is established which listens for
+  later connections. Once one is made, data_thread function is called. The data_thread is smart because
+  it avoids buffer overflow by using a while loop to receive information in chunks. It then determines
+  the type of request. The problem appears in a post request. When a post request is detected, it calls
+  the get_header function which is where the security flaw lies. Get_header receives the key value pair
+  named 'Content-Length'. In the function to read in that data, there is a temporary buffer called hdrval.
+  Common buffer overflows happen during gets, strcpy, and memcpy functions. In this method, memcpy copies
+  the data from 'Content-Length' into a defined size buffer of 1024 bytes. This is a flaw because if a
+  malicious user enters a content length value of something larger than the buffer size (>1024), it could
+  overflow into other values causing unexpected outcomes like a segmentation fault or bus error.
+
+  To fix it, we would have to check the size of (hdrend-hdrptr) which is essentially the value if
+  'Content-Length'. So I inserted a simple if statement saying if it exceeds the limited size of 1024,
+  to reject the data that exceeds its maximum size and truncate it to 1024 bytes. By including this
+  check, it will now never risk overflowing data into other memory spots and causing errors thus
+  preventing buffer overflow. There are however still other ways to crash the program unrelated to this.
+
+  My demo exploit is very simple. I used nano is DOS format to create a small POST request as follows:
+    POST / HTTP/1.0
+    Content-Length: aaaaaaaaaabbbbbbbbbb...............................................xxxxxxxxxxxx
+  Basically it's a post request for the root directory with a value for content length that is 1036
+  characters long. After testing I realized that this was the number for the overflow to have a crashing
+  effect on the webserver. I also realized that addding 4 more characters would lead to a bus error which
+  is also caused by the overflow. Since the content-length value is longer than the expected 1024 bytes,
+  it overflows into other values when it shouldn't and causes dire consequences thus crashing the program.
+
+2) Considering fhttpd alone, include in your memo:
+  A) An evaluation of the seriousness of the breach
+
+      The breach I caused was due to garbage values I choose at random just to count the necessary bytes
+      to screw up and resulting not very dangerous. However a more capable malicious hacker could analyze a
+      hex dump of the code and see how changing the bytes after the 1024 byte limit changes the remaining
+      code. Especially since FrobozzCo decided to run the webserver as root, this means that such a coder
+      could gain unauthorized superuser access to the server and access secret files as seen in the complaint.
+      Overall the company is at greater risk making this exploit very serious.
+
+  B) A recovery plan for the server. (Is it enough to fix the flaw? Why or why not?)
+
+      To a point, the server will now prevent any future code from being injected by new attackers.
+      However, it is possible that the server is already permanently compromised. The one buffer overflow
+      could have been used to plant a back door for future effects or gain more insight into other weaknesses
+      of the company. To best resolve this, both a recovery plan and hard reset. This means going back to a
+      previous state of the code before any attacks and then applying the fix rather than fixing the attacked
+      server. So to answer the question directly, no, it is not enough.
+
+  C) Any other observations or thoughts you might have.
+
+      I thought it was interesting how formatting was important in the functionality. Things like CLRF vs LF
+      meant something in the attack working. For example, telnet didn't require any formatting since it was
+      inline, but when using netcat, it was important to have CLRF (DOS). Also, there are many other things that
+      can break this server code. Originally I tried a request "GET http://www.google.com HTTP/1.1" which caused
+      a segmentation fault as well, however this was not a buffer overflow error.
+
+INSTRUCTIONS TO RUN EXPLOIT
+
+bash exploit.sh [PORT #]

@@ -1,0 +1,13 @@
+# This is a simple ns script. Comments start with #.
+set ns [new Simulator]                 
+source tb_compat.tcl
+
+set client [$ns node]
+set server [$ns node]
+
+set link0 [$ns duplex-link $server $client 1Gb 0ms DropTail]
+
+$ns rtproto Static
+
+# Go!
+$ns run

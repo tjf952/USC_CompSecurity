@@ -1,0 +1,33 @@
+
+SYN flood: form of DoS attack
+  -succession of SYN requests to a target's system in an attempt to consume enough server resources
+  -when legitimate user tries to connect, server refuses resulting in DoS
+  -normal process: SYN (client) -> SYN-ACK (server) -> SYN (client) TCP three way-handshake
+  -can disrupt process by:
+    1. Choosing not to send back expected ACK
+    2. Spoofing the source IP address in the SYN
+  -countermeasures:
+    1. Filtering
+    2. Increasing backlog
+    3. Reducing SYN-RECEIVED Timer
+    4. Recycling the oldest half-open TCP
+    5. SYN cache
+    6. SYN cookies
+    7. Hybrid approaches
+
+SYN cookies: system of particular choices of initial TCP sequence numbers by TCP servers
+  -top 5 bits: t mod 32, where t is a 32 bit time counter that increases every 64 seconds
+  -next 3 bits: encoding of MSS selected by server in response to client MSS
+  -bottom 24 bits: server selected secret function of client IP and port numbers
+
+TCPDUMP: dump traffic on a network
+  -tcpdump -? [ -B buffer_size ], ? can include:
+    [ -c count ] [ -C file_size ]
+    [ -F file ] [ -G rotate_seconds ] [ -i interface ]
+    [ --immediate-mode ] [ -j tstamp_type ] [ -m module ]
+    [ -M secret ] [ --number ] [ --print ] [ -Q in|out|inout ]
+    [ -r file ] [ -s snaplen ] [ -T type ] [ --version ]
+    [ -V file ] [ -w file ] [ -W filecount ] [ -y datalinktype ]
+    [ -z postrotate-command ] [ -Z user ]
+  -prints out a description of the contents of packets on a network interface that match boolean expression
+
